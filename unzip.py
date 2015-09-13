@@ -11,13 +11,16 @@ from zipfile import ZipFile
 file_fullname_list = sys.argv[1:]
 file_basename_list = []
 password_list = []
+if len(sys.argv[1:]) == 0:
+	print "[ - ] Error: You need to specify at least one zip file."
+	sys.exit()
 for i in file_fullname_list:
 	file_basename_list.append(i.split(".")[-2])
 for i in file_basename_list:
     password_list.append(i[-4:])
 password_list = ["infected" + s for s in password_list ]
 for i in range(len(password_list)):
-	print "[+] Extracting malware sample"
+	print "[ + ] Extracting malware sample %d/%d" %(i+1,len(password_list))
 	ZipFile(file_fullname_list[i]).extractall(pwd=password_list[i])
-	print "[+] Malware sample %s extracted, moving on to next one...\n" % file_basename_list[i]
-print "[+] All files extracted, good bye!\n"
+	print "[ + ] Malware sample %s extracted, moving on to next one...\n" % file_basename_list[i]
+print "[ + ] All files extracted, good bye!\n"
